@@ -4,7 +4,7 @@ plugins {
 }
 
 group = "funny.catlean"
-version = "1.0-SNAPSHOT"
+version = "1.0"
 
 repositories {
     mavenCentral()
@@ -24,8 +24,9 @@ kotlin {
 
 publishing {
     publications {
-        create<MavenPublication>("maven") {
+        create<MavenPublication>("gpr") {
             from(components["java"])
+            artifactId = "gofra"
 
             pom {
                 name.set("Gofra")
@@ -42,12 +43,11 @@ publishing {
     }
 
     repositories {
-        maven {
+        maven("https://maven.pkg.github.com/06ED/Gofra") {
             name = "GitHubPackages"
-            url = uri("https://maven.pkg.github.com/yourusername/my-kotlin-lib")
             credentials {
-                username = project.findProperty("gpr.user") as String? ?: System.getenv("GITHUB_USER")
-                password = project.findProperty("gpr.key") as String? ?: System.getenv("GITHUB_TOKEN")
+                username = project.findProperty("systemProp.gpr.user") as String?
+                password = project.findProperty("systemProp.gpr.token") as String?
             }
         }
     }
