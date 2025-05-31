@@ -24,7 +24,7 @@ class BenchmarkEventData(val data: String, val meow: List<String>)
 
 object BenchmarkEvent : Gofra<BenchmarkEventData>()
 
-fun main() {
+suspend fun main() {
     repeat(100) {
         BenchmarkEvent.subscribe(EventListener {
             // TODO
