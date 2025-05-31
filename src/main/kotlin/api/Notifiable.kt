@@ -1,7 +1,7 @@
 package funny.catlean.api
 
 interface Notifiable<T> {
-    suspend fun notify(event: T)
+    suspend fun notify(event: T): Boolean
 
-    suspend fun notifyGuarded(event: T, onError: suspend (e: Exception) -> Unit)
+    suspend fun notify(event: T, onError: suspend (e: Exception) -> Unit): Boolean
 }

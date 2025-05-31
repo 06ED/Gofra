@@ -16,13 +16,14 @@ abstract class Gofra<T> : Notifiable<T>, Subscribable<T> {
         events.remove(listener)
     }
 
-    override suspend fun notify(event: T) = events.forEach { it.callback(event) }
+    override suspend fun notify(event: T): Boolean = events.all { it.callback(event) }
 
-    override suspend fun notifyGuarded(event: T, onError: suspend (e: Exception) -> Unit) = events.forEach {
+    override suspend fun notify(event: T, onError: suspend (e: Exception) -> Unit): Boolean = events.all {
         try {
             it.callback(event)
         } catch (e: Exception) {
             onError(e)
+            false
         }
     }
 }
